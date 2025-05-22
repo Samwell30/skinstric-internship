@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css"
 import ConsumerData from "./pages/ConsumerData";
 import UserImage from "./pages/UserImage";
+import DemographicsInfo from "./pages/Demographics";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Landing />}></Route>
           <Route path="/consumerData" element={<ConsumerData />}></Route>
           <Route path="/userImage" element={<UserImage />}></Route>
+          <Route path="/demographics" element={<DemographicsInfo />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
