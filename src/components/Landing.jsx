@@ -1,19 +1,23 @@
 import React from "react";
-import right from "../assets/Rectangle 2778.png";
-import left from "../assets/Rectangle 2779.png"
+import { Link } from "react-router-dom";
+import toTest from "../assets/button-icon-text-expanded.png"
 
 const Landing = () => {
     return (
+        <>
+            <div className="test__btn">
+            <Link to="/consumerData">
+                <img style={{ height: "70px"}} src={toTest} alt=""/>
+            </Link>
+            </div>
         <div className="landing__page">
-            <div className="arrow"></div>
-            <img src={left} className="arrow left__arrow" alt="" />
-            <img src={right} className="arrow right__arrow" alt="" />
             <div className="center__container">
-            <h1 className="title">
-                Sophisticated <br /> skincare
-            </h1>
+                <h1 className="title">
+                    Sophisticated <br /> skincare
+                </h1>
             </div>
         </div>
+        </>
     );
 };
 
