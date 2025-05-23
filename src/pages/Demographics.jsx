@@ -101,7 +101,7 @@ export default function DemographicsInfo() {
                 </div>
             )}
 
-            <button onClick={() => navigate("/demographics")} className="primary-btn">
+            <button onClick={() => navigate("/userImage")} className="primary-btn">
                 go back
             </button>
         </div>

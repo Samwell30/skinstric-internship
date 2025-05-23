@@ -1,84 +1,69 @@
-import React from "react";
-import { useState, useRef } from "react";
-import gallery from "../assets/gallery.png"
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import gallery from "../assets/gallery.png";
+import CameraCapture from "../components/CameraCapture";
+import ImagePreview from "../components/ImagePreview";
+import GalleryUpload from "../components/GalleryUpload";
 
 const UserImage = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [imagePreview, setImagePreview] = useState(null);
     const fileInputRef = useRef();
-    const [demographics, setDemographics] = useState(null)
     const [loading, setLoading] = useState(false);
 
+    const videoRef = useRef(null);
+    const canvasRef = useRef(null);
+    const [showCamera, setShowCamera] = useState(false);
+    const [cameraStream, setCameraStream] = useState(null);
 
-    const resizeImage = (file, maxWidth = 600, maxHeight = 600) => {
+    const resizeImage = (fileOrBase64, maxWidth = 600, maxHeight = 600) => {
         return new Promise((resolve, reject) => {
-            const reader = new FileReader();
+            const img = new Image();
+            img.src = typeof fileOrBase64 === "string" ? fileOrBase64 : URL.createObjectURL(fileOrBase64);
 
-            reader.onload = (event) => {
+            img.onload = () => {
+                const canvas = document.createElement("canvas");
+                let width = img.width;
+                let height = img.height;
 
-                const img = new Image();
-                img.src = event.target.result;
-
-                img.onload = () => {
-
-                    const canvas = document.createElement('canvas');
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > maxWidth || height > maxHeight) {
-                        if (width > height) {
-                            height = (maxWidth / width) * height;
-                            width = maxWidth;
-                        } else {
-                            width = (maxHeight / height) * width;
-                            height = maxHeight;
-                        }
+                if (width > maxWidth || height > maxHeight) {
+                    if (width > height) {
+                        height = (maxWidth / width) * height;
+                        width = maxWidth;
+                    } else {
+                        width = (maxHeight / height) * width;
+                        height = maxHeight;
                     }
+                }
 
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    const resizedBase64 = canvas.toDataURL('image/jpeg', 0.8);
-                    resolve(resizedBase64);
-                };
-
-                img.onerror = (err) => {
-                    console.error('Image load error:', err);
-                    reject(err);
-                };
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
+                const resizedBase64 = canvas.toDataURL("image/jpeg", 0.8);
+                resolve(resizedBase64);
             };
 
-            reader.onerror = (error) => {
-                console.error('FileReader error:', error);
-                reject(error);
-            };
-
-            reader.readAsDataURL(file);
+            img.onerror = reject;
         });
     };
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
-        if (!file) {
-            return;
-        }
-
+        if (!file) return;
 
         const previewURL = URL.createObjectURL(file);
         setImagePreview(previewURL);
 
         try {
             const resizedBase64 = await resizeImage(file);
-            await uploadBase64(resizedBase64);
+            await uploadBase64(resizedBase64, previewURL);
         } catch (err) {
-            console.error('Error resizing or uploading:', err);
+            console.error("Error processing image:", err);
         }
     };
 
-    const uploadBase64 = async (base64) => {
+    const uploadBase64 = async (base64, preview = null) => {
         setLoading(true);
         try {
             const res = await fetch(
@@ -94,7 +79,7 @@ const UserImage = () => {
             navigate("/demographics", {
                 state: {
                     demographics: json.data,
-                    preview: imagePreview,
+                    preview: preview || base64,
                 },
             });
         } catch (err) {
@@ -105,38 +90,82 @@ const UserImage = () => {
         }
     };
 
+    useEffect(() => {
+        if (showCamera && videoRef.current && cameraStream) {
+            videoRef.current.srcObject = cameraStream;
+        }
+    }, [showCamera, cameraStream]);
+
+    const startCamera = async () => {
+        setShowCamera(true); // Show the video element first
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            setCameraStream(stream); // Save the stream in state
+        } catch (err) {
+            console.error("Camera error:", err);
+            alert("Camera access denied: " + err.name + " - " + err.message);
+            setShowCamera(false);
+        }
+    };
+
+    const stopCamera = () => {
+        if (cameraStream) {
+            cameraStream.getTracks().forEach((track) => track.stop());
+            setCameraStream(null);
+        }
+        if (videoRef.current) {
+            videoRef.current.srcObject = null;
+        }
+        setShowCamera(false);
+    };
+
+    const captureSelfie = async () => {
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+
+        // Ensure video is ready
+        if (!video.videoWidth || !video.videoHeight) {
+            alert("Camera not ready. Please try again.");
+            return;
+        }
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const base64 = canvas.toDataURL("image/jpeg", 0.8);
+        setImagePreview(base64);
+        const resizedBase64 = await resizeImage(base64);
+        await uploadBase64(resizedBase64, base64);
+
+        stopCamera(); // Stop camera after capture
+    };
+
     return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <img
-                src={gallery}
-                alt="Upload from Gallery"
-                onClick={() => fileInputRef.current.click()}
-                style={{ cursor: 'pointer', width: '150px' }}
-            />
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center" }}>
+            {/* Upload from Gallery */}
+            <GalleryUpload fileInputRef={fileInputRef} onFileChange={handleFileChange} galleryImg={gallery} />
 
-            <input
-                type="file"
-                accept="image/*"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-            />
+            {/* Take a Selfie */}
+            <button onClick={startCamera} className="primary-btn">
+                Take a Selfie
+            </button>
 
-            <div className="upload__preview">
-                {imagePreview ? (
-                    <img
-                        src={imagePreview}
-                        alt="Preview"
-                        style={{
-                            maxWidth: '100%',
-                            maxHeight: '100%',
-                            objectFit: 'contain'
-                        }}
-                    />
-                ) : (
-                    <span>Image preview will appear here</span>
-                )}
-            </div>
+            {showCamera && (
+                <CameraCapture
+                    videoRef={videoRef}
+                    canvasRef={canvasRef}
+                    onCapture={captureSelfie}
+                    onClose={stopCamera}
+                />
+            )}
+
+            <ImagePreview imagePreview={imagePreview} />
+
+            <a href="/">
+                <button>Go back</button>
+            </a>
         </div>
     );
 };
