@@ -8,8 +8,8 @@ const UserImage = () => {
     const [imagePreview, setImagePreview] = useState(null);
     const fileInputRef = useRef();
     const [demographics, setDemographics] = useState(null)
-    const [loading, setLoading]   = useState(false);
-    
+    const [loading, setLoading] = useState(false);
+
 
     const resizeImage = (file, maxWidth = 600, maxHeight = 600) => {
         return new Promise((resolve, reject) => {
@@ -78,33 +78,32 @@ const UserImage = () => {
         }
     };
 
-   const uploadBase64 = async (base64) => {
-    setLoading(true);
-    try {
-      const res = await fetch(
-        "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ image: base64 }),
-        }
-      );
-      const json = await res.json();
+    const uploadBase64 = async (base64) => {
+        setLoading(true);
+        try {
+            const res = await fetch(
+                "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ image: base64 }),
+                }
+            );
+            const json = await res.json();
 
-      // ✅ success → navigate and pass data via router state
-      navigate("/demographics", {
-        state: {
-          demographics: json.data,
-          preview: imagePreview, // optional: show the photo on next page
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      alert("Upload failed. Try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+            navigate("/demographics", {
+                state: {
+                    demographics: json.data,
+                    preview: imagePreview,
+                },
+            });
+        } catch (err) {
+            console.error(err);
+            alert("Upload failed. Try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -123,20 +122,7 @@ const UserImage = () => {
                 style={{ display: 'none' }}
             />
 
-            <div
-                style={{
-                    width: '200px',
-                    height: '200px',
-                    border: '1px solid #ccc',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: '#f9f9f9',
-                    color: '#aaa',
-                    fontSize: '14px',
-                    textAlign: 'center',
-                }}
-            >
+            <div className="upload__preview">
                 {imagePreview ? (
                     <img
                         src={imagePreview}
@@ -149,32 +135,6 @@ const UserImage = () => {
                     />
                 ) : (
                     <span>Image preview will appear here</span>
-                )}
-                {demographics && (
-                    <div style={{ marginLeft: '1rem', textAlign: 'left' }}>
-                        <h4>Prediction Results:</h4>
-
-                        <strong>Gender:</strong>
-                        <ul>
-                            {Object.entries(demographics.gender).map(([key, val]) => (
-                                <li key={key}>{key}: {(val * 100).toFixed(2)}%</li>
-                            ))}
-                        </ul>
-
-                        <strong>Race:</strong>
-                        <ul>
-                            {Object.entries(demographics.race).map(([key, val]) => (
-                                <li key={key}>{key}: {(val * 100).toFixed(2)}%</li>
-                            ))}
-                        </ul>
-
-                        <strong>Age:</strong>
-                        <ul>
-                            {Object.entries(demographics.age).map(([key, val]) => (
-                                <li key={key}>{key}: {(val * 100).toFixed(2)}%</li>
-                            ))}
-                        </ul>
-                    </div>
                 )}
             </div>
         </div>
