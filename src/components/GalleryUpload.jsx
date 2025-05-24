@@ -1,12 +1,12 @@
 import React from "react";
 
-const GalleryUpload = ({ fileInputRef, onFileChange, galleryImg }) => (
+const GalleryUpload = ({ fileInputRef, onFileChange, galleryImg, style }) => (
   <>
     <img
       src={galleryImg}
       alt="Upload from Gallery"
       onClick={() => fileInputRef.current.click()}
-      style={{ cursor: "pointer", width: "150px" }}
+      style={style}
     />
     <input
       type="file"
