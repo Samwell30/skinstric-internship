@@ -1,43 +1,64 @@
 body {
   font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
   margin: 0;
-  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+img {
+  cursor: pointer;
 }
 
 .landing__page {
   position: relative;
   height: 100vh;
-  width: 100%;
   overflow: hidden;
 }
 
 .title {
+  position: absolute;
+  left: 50%;
+  top: 43%; /* Adjust as needed for vertical centering */
+  transform: translate(-50%, -50%);
   font-weight: 300;
   font-size: 100px;
   line-height: 120px;
+  text-align: center;
+  z-index: 10;
+  transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    text-align 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.center__container {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  text-align: center;
+.title--left-abs {
+  left: 60px;
+  text-align: left;
+  transform: translate(0, -50%);
 }
 
 .test__btn {
   position: absolute;
   right: 95px;
   top: 50%;
+  z-index: 1;
 }
 
 .test {
   font-size: 100px;
+}
+
+.description--para {
+  font-family: Roobert TRIAL;
+  position: absolute;
+  bottom: 6px;     
+  left: 40px;        
+  text-align: left;  
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-transform: uppercase;
+  width: 316px;
+  height: 72px;
 }
 
 .back__btn {
@@ -90,6 +111,7 @@ body {
   color: red;
   font-size: 0.875rem;
   margin-bottom: 0.25rem;
+  white-space: nowrap;
 }
 
 .dots__loader {
@@ -142,8 +164,14 @@ body {
 }
 
 .status__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Ensure it fills the rhombus */
+  width: 100%;
   text-align: center;
-  margin-top: 2rem;
+  margin: 0; /* Remove any default margin */
 }
 
 .thank__you {
@@ -168,4 +196,146 @@ body {
   color: #aaa;
   font-size: 14px;
   text-align: center;
+}
+
+.consumer__page {
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.rhombus {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto;
+  transform: rotate(45deg);
+  border: 1px dotted #0556e1;
+  animation: rhombus-spin 100s linear infinite;
+  top: 20px;
+  left:20px;
+}
+
+@keyframes rhombus-spin {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(405deg);
+  }
+}
+
+.rhombus .input__wrapper {
+  width: 80%;
+  text-align: center;
+  /* Counter-rotate with animation */
+  animation: rhombus-counter-spin 100s linear infinite;
+}
+
+@keyframes rhombus-counter-spin {
+  0% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(-405deg);
+  }
+}
+
+.rhombus__container {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  margin: 40px auto;
+  top: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rhombus.rhombus--large {
+  width: 360px;
+  height: 360px;
+  border: 2px dashed #a0a4ab;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: transparent;
+  transform: rotate(45deg);
+  animation: rhombus-spin 80s linear infinite; /* Use the same as .rhombus */
+  pointer-events: none;
+}
+
+@keyframes rhombus-spin-reverse {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(-315deg); /* 45deg - 360deg */
+  }
+}
+
+/* UserImage page layout */
+.userimage__container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.userimage__preview {
+  position: absolute;
+  top: 80px;
+  right: 40px;
+  z-index: 10;
+}
+
+.userimage__center {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px; /* Move content down if needed, adjust as needed */
+}
+
+.userimage__actions {
+  display: flex;
+  flex-direction: row;
+  gap: 500px;
+  align-items: center;
+}
+
+.userimage__camera {
+  cursor: pointer;
+}
+
+.userimage__backbtn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+.rhombus > img,
+.rhombus > .gallery-upload {
+  /* Counter-rotate to keep content upright */
+  animation: rhombus-counter-spin 100s linear infinite;
+}
+
+.rhombus > img {
+  display: block;
+  margin: 0 auto;
+}
+
+.rhombus > .gallery-upload {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -5,6 +5,7 @@ import camera from "../assets/camera.png";
 import CameraCapture from "../components/CameraCapture";
 import ImagePreview from "../components/ImagePreview";
 import GalleryUpload from "../components/GalleryUpload";
+import backButton from "../assets/button-icon-text-shrunk.png"
 
 const UserImage = () => {
   const navigate = useNavigate();
@@ -145,51 +146,50 @@ const UserImage = () => {
     stopCamera();
   };
 
-return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "stretch", width: "100vw" }}>
-        <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            width: "100%",
-            padding: "2rem 10vw",
-        }}>
-            <img
+  return (
+    <div className="userimage__container">
+      <div className="userimage__preview">
+        <ImagePreview imagePreview={imagePreview} />
+      </div>
+      {/* Add rhombus background to camera and gallery */}
+      <div className="userimage__center">
+        <div className="userimage__actions">
+          <div className="rhombus__container">
+            <div className="rhombus rhombus--large"></div>
+            <div className="rhombus">
+              <img
                 src={camera}
                 alt="Take a Selfie"
                 onClick={startCamera}
-                style={{
-                    cursor: "pointer",
-                    width: "150px",
-                    margin: "1rem 0"
-                }}
-            />
-
-            <GalleryUpload
+                className="userimage__camera"
+              />
+            </div>
+          </div>
+          <div className="rhombus__container">
+            <div className="rhombus rhombus--large"></div>
+            <div className="rhombus">
+              <GalleryUpload
                 fileInputRef={fileInputRef}
                 onFileChange={handleFileChange}
                 galleryImg={gallery}
-                style={{ width: "150px", cursor: "pointer", margin: "1rem 0" }}
-            />
+              />
+            </div>
+          </div>
         </div>
-
-        {showCamera && (
-            <CameraCapture
-                videoRef={videoRef}
-                canvasRef={canvasRef}
-                onCapture={captureSelfie}
-                onClose={stopCamera}
-            />
-        )}
-
-            <ImagePreview imagePreview={imagePreview} />
-
-        <a href="/">
-            <button>Go back</button>
-        </a>
+      </div>
+      <div className="userimage__backbtn">
+        <img onClick={() => navigate("/")} src={backButton} alt="" />
+      </div>
+      {showCamera && (
+        <CameraCapture
+          videoRef={videoRef}
+          canvasRef={canvasRef}
+          onCapture={captureSelfie}
+          onClose={stopCamera}
+        />
+      )}
     </div>
-);
+  );
 };
 
 export default UserImage;

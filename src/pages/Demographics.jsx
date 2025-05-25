@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 import "../demographics.css";
+import backButton from "../assets/button-icon-text-shrunk.png";
+
 
 export default function DemographicsInfo() {
   const [activeCategory, setActiveCategory] = React.useState("race");
@@ -41,30 +43,36 @@ export default function DemographicsInfo() {
           Show Demographics
         </button>
       )}
+      { }
 
       {showDemo && demographics && (
         <div className="demo-table">
           <div className="demo-table-row">
             <div className="demo-table-col label-col">
-              {["race", "gender", "age"].map((category) => (
-                <div
-                  key={category}
-                  className={`label-item${
-                    activeCategory === category ? " active" : ""
-                  }`}
-                  onClick={() => setActiveCategory(category)}
-                  style={{ cursor: "pointer", marginBottom: "2rem" }}
-                >
-                  <strong
-                    style={{
-                      color:
-                        activeCategory === category ? "#0052d9" : "inherit",
-                    }}
+              {["race", "gender", "age"].map((category) => {
+                const data = demographics[category];
+                const [topKey] = getTopPrediction(data);
+                const value = selected[category] || topKey;
+                return (
+                  <div
+                    key={category}
+                    className={`label-item${activeCategory === category ? " active" : ""}`}
+                    onClick={() => setActiveCategory(category)}
+                    style={{ cursor: "pointer", marginBottom: "2rem" }}
                   >
-                    {category.charAt(0).toUpperCase() + category.slice(1)}
-                  </strong>
-                </div>
-              ))}
+                    <div style={{ fontSize: "1rem", color: "#0052d9", marginBottom: "0.25rem" }}>
+                      {value}
+                    </div>
+                    <strong
+                      style={{
+                        color: activeCategory === category ? "#0052d9" : "inherit",
+                      }}
+                    >
+                      {category.charAt(0).toUpperCase() + category.slice(1)}
+                    </strong>
+                  </div>
+                );
+              })}
             </div>
             <div className="demo-table-col confidence-col">
               {(() => {
@@ -73,81 +81,49 @@ export default function DemographicsInfo() {
                 const userVal = selected[activeCategory];
                 const displayValue = userVal || topKey;
                 const confidenceScore = data[displayValue];
-                const percent = (confidenceScore * 100).toFixed(1);
-
-                const radius = 28;
-                const stroke = 6;
-                const normalizedRadius = radius - stroke / 2;
-                const circumference = normalizedRadius * 2 * Math.PI;
-                const offset = circumference - confidenceScore * circumference;
-
                 return (
                   <div className="confidence-row">
-                    <svg
-                      height={radius * 2}
-                      width={radius * 2}
-                      className="circular-spinner"
-                    >
-                      <circle
-                        stroke="#e0e0e0"
-                        fill="transparent"
-                        strokeWidth={stroke}
-                        r={normalizedRadius}
-                        cx={radius}
-                        cy={radius}
+                    <p>{(confidenceScore * 100).toFixed(1)}%</p>
+                    <div className="confidence-bar">
+                      <div
+                        className="confidence-fill"
+                        style={{ width: `${confidenceScore * 100}%` }}
                       />
-                      <circle
-                        stroke="#4caf50"
-                        fill="transparent"
-                        strokeWidth={stroke}
-                        strokeLinecap="round"
-                        strokeDasharray={circumference}
-                        strokeDashoffset={offset}
-                        r={normalizedRadius}
-                        cx={radius}
-                        cy={radius}
-                        style={{ transition: "stroke-dashoffset 0.5s" }}
-                      />
-                      <text
-                        x="50%"
-                        y="50%"
-                        textAnchor="middle"
-                        dy=".3em"
-                        fontSize="1.1rem"
-                        fontWeight="bold"
-                        fill="#333"
-                      >
-                        {percent}%
-                      </text>
-                    </svg>
+                    </div>
                   </div>
                 );
               })()}
-            </div>{" "}
+            </div>
             <div className="demo-table-col user-col">
               {(() => {
                 const data = demographics[activeCategory];
                 const userVal = selected[activeCategory];
                 return (
                   <div className="user-row">
-                    <select
-                      id={`${activeCategory}-select`}
-                      value={userVal || ""}
-                      onChange={(e) =>
-                        setSelected((prev) => ({
-                          ...prev,
-                          [activeCategory]: e.target.value,
-                        }))
-                      }
-                    >
-                      {Object.entries(data)
-                        .sort((a, b) => b[1] - a[1])
-                        .map(([key, val]) => (
-                          <option key={key} value={key}>
-                            {key} ({(val * 100).toFixed(1)}%)
-                          </option>
-                        ))}
-                    </select>
+                    {Object.entries(data)
+                      .sort((a, b) => b[1] - a[1])
+                      .map(([key, val]) => (
+                        <div
+                          key={key}
+                          className={`user-value${userVal === key ? " selected" : ""}`}
+                          onClick={() =>
+                            setSelected((prev) => ({
+                              ...prev,
+                              [activeCategory]: key,
+                            }))
+                          }
+                          style={{
+                            cursor: "pointer",
+                            padding: "0.5rem 1rem",
+                            margin: "0.25rem 0",
+                            border: userVal === key ? "2px solid #0052d9" : "1px solid #ccc",
+                            borderRadius: "6px",
+                            background: userVal === key ? "#e6f0fa" : "#fff",
+                          }}
+                        >
+                          {key} ({(val * 100).toFixed(1)}%)
+                        </div>
+                      ))}
                   </div>
                 );
               })()}
@@ -156,9 +132,7 @@ export default function DemographicsInfo() {
         </div>
       )}
 
-      <button onClick={() => navigate("/userImage")} className="primary-btn">
-        go back
-      </button>
+      <img src={backButton} onClick={() => navigate("/userImage")} className="primary-btn left-corner-btn" />
     </div>
   );
 }
