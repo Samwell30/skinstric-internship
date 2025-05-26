@@ -5,11 +5,13 @@ import "./index.css"
 import ConsumerData from "./pages/ConsumerData";
 import UserImage from "./pages/UserImage";
 import DemographicsInfo from "./pages/Demographics";
+import Header from "./components/Header";
 
 function App() {
 
   return (
     <BrowserRouter>
+    <Header/>
       <div className="app">
         <Routes>
           <Route path="/" element={<Landing />}></Route>

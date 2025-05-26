@@ -75,7 +75,7 @@ const ConsumerData = () => {
     }
   };
 
-  const handleProceed = () => {};
+  const handleProceed = () => { };
 
   return (
     <div className="consumer__page">
@@ -151,30 +151,34 @@ const ConsumerData = () => {
         <div className="rhombus__container">
           <div className="rhombus rhombus--large"></div>
           <div className="rhombus">
-            <div className="status__wrapper">
-              {status.type === "success" ? (
-                <>
-                  <h1 className="thank__you">Thank you</h1>
-                  <p className="proceed__text">Proceed for the next step</p>
-                  <div className="proceed__btn">
-                    <Link to="/userImage">
-                      <img src={proceed} onClick={handleProceed} alt="" />
-                    </Link>
-                  </div>
-                </>
-              ) : (
-                <p
-                  style={{
-                    color: "red",
-                    textAlign: "center",
-                    fontSize: "1.25rem",
-                  }}
-                >
-                  {status.text}
-                </p>
-              )}
+            <div className="rhombus__content">
+              <div className="status__wrapper">
+                {status.type === "success" ? (
+                  <>
+                    <h1 className="thank__you">Thank you</h1>
+                    <p className="proceed__text">Proceed for the next step</p>
+                  </>
+                ) : (
+                  <p
+                    style={{
+                      color: "red",
+                      textAlign: "center",
+                      fontSize: "1.25rem",
+                    }}
+                  >
+                    {status.text}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
+        </div>
+      )}
+      {step === "status" && status && status.type === "success" && (
+        <div className="proceed__btn">
+          <Link to="/userImage">
+            <img src={proceed} onClick={handleProceed} alt="" />
+          </Link>
         </div>
       )}
     </div>

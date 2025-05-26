@@ -1,11 +1,45 @@
 body {
-  font-family: sans-serif;
+  font-family: Roobert TRIAL;
   margin: 0;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 img {
   cursor: pointer;
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.enter__code {
+  display: flex;
+  justify-content: flex-end;
+  width: 92%;
+  font-size: 0.8rem;
+}
+.enter__code-btn {
+  background: #000000;
+  color: #fff;
+  border: none;
+  padding: 8px 8px;
+  font-size: 0.7rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(5, 86, 225, 0.08);
+}
+
+.enter__code-btn:hover {
+  background: #003fa3;
 }
 
 .landing__page {
@@ -17,7 +51,7 @@ img {
 .title {
   position: absolute;
   left: 50%;
-  top: 43%; /* Adjust as needed for vertical centering */
+  top: 43%;
   transform: translate(-50%, -50%);
   font-weight: 300;
   font-size: 100px;
@@ -49,9 +83,9 @@ img {
 .description--para {
   font-family: Roobert TRIAL;
   position: absolute;
-  bottom: 6px;     
-  left: 40px;        
-  text-align: left;  
+  bottom: 6px;
+  left: 40px;
+  text-align: left;
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
@@ -67,9 +101,13 @@ img {
   left: 80px;
 }
 .proceed__btn {
-  position: absolute;
-  top: 630px;
-  right: 80px;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 100;
 }
 
 /* consumer data  */
@@ -90,7 +128,7 @@ img {
 }
 
 .user__input {
-  font-size: 3rem; /* 48px */
+  font-size: 3rem;
   font-weight: 400;
   text-align: center;
   background-color: transparent;
@@ -168,10 +206,10 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%; /* Ensure it fills the rhombus */
+  height: 100%;
   width: 100%;
   text-align: center;
-  margin: 0; /* Remove any default margin */
+  margin: 0;
 }
 
 .thank__you {
@@ -186,16 +224,26 @@ img {
 }
 
 .upload__preview {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border: 1px solid #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f9f9f9;
-  color: #aaa;
   font-size: 14px;
   text-align: center;
+}
+
+.upload__preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.upload__preview-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 0.5rem;
 }
 
 .consumer__page {
@@ -217,7 +265,7 @@ img {
   border: 1px dotted #0556e1;
   animation: rhombus-spin 100s linear infinite;
   top: 20px;
-  left:20px;
+  left: 20px;
 }
 
 @keyframes rhombus-spin {
@@ -232,7 +280,6 @@ img {
 .rhombus .input__wrapper {
   width: 80%;
   text-align: center;
-  /* Counter-rotate with animation */
   animation: rhombus-counter-spin 100s linear infinite;
 }
 
@@ -266,7 +313,7 @@ img {
   z-index: 1;
   background: transparent;
   transform: rotate(45deg);
-  animation: rhombus-spin 80s linear infinite; /* Use the same as .rhombus */
+  animation: rhombus-spin 80s linear infinite;
   pointer-events: none;
 }
 
@@ -275,11 +322,10 @@ img {
     transform: rotate(45deg);
   }
   100% {
-    transform: rotate(-315deg); /* 45deg - 360deg */
+    transform: rotate(-315deg);
   }
 }
 
-/* UserImage page layout */
 .userimage__container {
   position: relative;
   width: 100vw;
@@ -300,13 +346,13 @@ img {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 60px; /* Move content down if needed, adjust as needed */
+  padding-top: 60px;
 }
 
 .userimage__actions {
   display: flex;
   flex-direction: row;
-  gap: 500px;
+  gap: 300px;
   align-items: center;
 }
 
@@ -323,7 +369,6 @@ img {
 
 .rhombus > img,
 .rhombus > .gallery-upload {
-  /* Counter-rotate to keep content upright */
   animation: rhombus-counter-spin 100s linear infinite;
 }
 
@@ -338,4 +383,83 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.rhombus__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: rhombus-counter-spin 100s linear infinite;
+}
+
+.results__wrapper {
+  min-height: 100vh;
+}
+
+.diamond-menu-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diamond-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4rem 0;
+}
+
+.diamond-row {
+  display: flex;
+  justify-content: center;
+}
+
+.diamond {
+  width: 140px;
+  height: 140px;
+  background: #f5f5f5;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: background 0.2s;
+}
+
+.diamond:hover {
+  background: #e0e0e0;
+}
+
+.diamond > * {
+  transform: rotate(-45deg);
+}
+
+.diamond-top {
+  margin-bottom: -2.3rem;
+}
+.diamond-bottom {
+  margin-top: -2.3rem;
+}
+.diamond-left,
+.diamond-right {
+  margin: 0 2.1rem;
+}
+
+.camera__label-line {
+  position: absolute;
+  left: 60%;
+  top: 32%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  pointer-events: none;
 }

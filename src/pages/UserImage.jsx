@@ -151,7 +151,6 @@ const UserImage = () => {
       <div className="userimage__preview">
         <ImagePreview imagePreview={imagePreview} />
       </div>
-      {/* Add rhombus background to camera and gallery */}
       <div className="userimage__center">
         <div className="userimage__actions">
           <div className="rhombus__container">
@@ -164,6 +163,9 @@ const UserImage = () => {
                 className="userimage__camera"
               />
             </div>
+            <div className="camera__label-line">
+              <div className="camera__label">ALLOW A.I.<br />TO SCAN YOUR FACE</div>
+            </div>
           </div>
           <div className="rhombus__container">
             <div className="rhombus rhombus--large"></div>
@@ -174,6 +176,10 @@ const UserImage = () => {
                 galleryImg={gallery}
               />
             </div>
+                        <div className="camera__label-line">
+              <div className="camera__label">ALLOW A.I.<br />TO ACCESS GALLERY</div>
+            </div>
+
           </div>
         </div>
       </div>
