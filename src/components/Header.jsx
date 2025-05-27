@@ -1,11 +1,17 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
+  const location = useLocation();
+  const isLanding = location.pathname === '/';
   return (
     <div id="header">Skintric<span>[intro]</span>
-<div class="enter__code">
-  <button class="enter__code-btn">Enter Code</button>
-</div>    </div>
+      {isLanding && (
+        <div className="enter__code">
+          <button className="enter__code-btn">Enter Code</button>
+        </div>
+      )}
+    </div>
   )
 }
 

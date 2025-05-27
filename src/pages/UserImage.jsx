@@ -12,6 +12,7 @@ const UserImage = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef();
   const [loading, setLoading] = useState(false);
+  const [cameraLoading, setCameraLoading] = useState(false);
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -57,6 +58,8 @@ const UserImage = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    setLoading(true);
+
     const previewURL = URL.createObjectURL(file);
     setImagePreview(previewURL);
 
@@ -65,35 +68,39 @@ const UserImage = () => {
       await uploadBase64(resizedBase64, previewURL);
     } catch (err) {
       console.error("Error processing image:", err);
+      setLoading(false);
     }
   };
 
-  const uploadBase64 = async (base64, preview = null) => {
-    setLoading(true);
-    try {
-      const res = await fetch(
-        "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ image: base64 }),
-        }
-      );
-      const json = await res.json();
+const uploadBase64 = async (base64, preview = null) => {
+  setLoading(true);
+  try {
+    const res = await fetch(
+      "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: base64 }),
+      }
+    );
+    const json = await res.json();
 
-      navigate("/demographics", {
+    // Keep loading until after navigation
+    setTimeout(() => {
+      navigate("/diamond-menu", {
         state: {
           demographics: json.data,
           preview: preview || base64,
         },
       });
-    } catch (err) {
-      console.error(err);
-      alert("Upload failed. Try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+      setLoading(false); // Move this here
+    }, 1500);
+  } catch (err) {
+    console.error(err);
+    alert("Upload failed. Try again.");
+    setLoading(false); // Only set false on error
+  }
+};
 
   useEffect(() => {
     if (showCamera && videoRef.current && cameraStream) {
@@ -102,16 +109,42 @@ const UserImage = () => {
   }, [showCamera, cameraStream]);
 
   const startCamera = async () => {
+    setCameraLoading(true); // Show loading
     setShowCamera(true);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
       setCameraStream(stream);
+      setCameraLoading(false); // Hide loading when ready
     } catch (err) {
-      console.error("Camera error:", err);
-      alert("Camera access denied: " + err.name + " - " + err.message);
+      alert("Camera access denied.");
       setShowCamera(false);
+      setCameraLoading(false);
     }
   };
+
+  if (cameraLoading) {
+    return (
+      <div className="rhombus__container">
+        <div className="rhombus rhombus--large"></div>
+        <div className="rhombus rhombus--medium"></div>
+        <div className="rhombus">
+          <div className="rhombus__content">
+            <div className="loading-screen">
+              <p>SETTING UP CAMERA...</p>
+              <div className="dots__loader">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const stopCamera = () => {
     if (cameraStream) {
@@ -133,6 +166,8 @@ const UserImage = () => {
       return;
     }
 
+    setLoading(true);
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext("2d");
@@ -145,6 +180,27 @@ const UserImage = () => {
 
     stopCamera();
   };
+
+  if (loading) {
+    return (
+      <div className="rhombus__container">
+        <div className="rhombus rhombus--large"></div>
+        <div className="rhombus rhombus--medium"></div>
+        <div className="rhombus">
+          <div className="rhombus__content">
+            <div className="loading-screen">
+              <p>Preparing your analysis...</p>
+              <div className="dots__loader">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="userimage__container">

@@ -75,7 +75,7 @@ const ConsumerData = () => {
     }
   };
 
-  const handleProceed = () => { };
+  const handleProceed = () => {};
 
   return (
     <div className="consumer__page">
@@ -156,7 +156,7 @@ const ConsumerData = () => {
         <div className="rhombus__container">
           <div className="rhombus rhombus--large"></div>
           <div className="rhombus rhombus--medium"></div>
-          <div className="rhombus">
+          <div className="rhombus no-spin">
             <div className="rhombus__content">
               <div className="status__wrapper">
                 {status.type === "success" ? (

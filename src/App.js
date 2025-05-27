@@ -6,6 +6,7 @@ import ConsumerData from "./pages/ConsumerData";
 import UserImage from "./pages/UserImage";
 import DemographicsInfo from "./pages/Demographics";
 import Header from "./components/Header";
+import DiamondMenuPage from "./components/DiamondMenuPage";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Landing />}></Route>
           <Route path="/consumerData" element={<ConsumerData />}></Route>
           <Route path="/userImage" element={<UserImage />}></Route>
+          <Route path="/diamond-menu" element={<DiamondMenuPage />}></Route>
           <Route path="/demographics" element={<DemographicsInfo />}></Route>
         </Routes>
       </div>

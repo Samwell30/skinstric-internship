@@ -2,13 +2,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 import "../demographics.css";
 import backButton from "../assets/button-icon-text-shrunk.png";
+import DiamondMenu from "../components/DiamondMenu";
 
 export default function DemographicsInfo() {
   const [activeCategory, setActiveCategory] = React.useState("race");
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [loading, setLoading] = React.useState(true);
-  const [showDemo, setShowDemo] = React.useState(false);
+  const [showDemo, setShowDemo] = React.useState(!!state);
   const [selected, setSelected] = React.useState({
     race: "",
     gender: "",
@@ -23,79 +23,15 @@ export default function DemographicsInfo() {
     return Object.entries(dataObj).sort((a, b) => b[1] - a[1])[0];
   };
 
-  React.useEffect(() => {
-    const timeout = setTimeout(() => setLoading(false), 10000);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="rhombus__container">
-        <div className="rhombus rhombus--large"></div>
-        <div className="rhombus rhombus--medium"></div>
-        <div className="rhombus">
-          <div className="rhombus__content">
-            <div className="loading-screen">
-              <p>Preparing your analysis...</p>
-              <div className="dots__loader">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const { demographics, preview } = state;
 
   return (
-    <div className="results__wrapper">
-      {!showDemo && (
-        <div className="diamond-menu-center">
-          <div className="diamond-menu">
-            <div className="diamond-row">
-              <div
-                className="diamond diamond-top"
-                onClick={() => handleDiamondClick("demographics")}
-              >
-                <span>DEMOGRAPHICS</span>
-              </div>
-            </div>
-            <div className="diamond-row">
-              <div
-                className="diamond diamond-left"
-                onClick={() => handleDiamondClick("skinType")}
-              >
-                <span>
-                  SKIN TYPE
-                  <br /> DETAILS
-                </span>
-              </div>
-              <div
-                className="diamond diamond-right"
-                onClick={() => handleDiamondClick("cosmeticConcerns")}
-              >
-                <span>
-                  COSMETIC
-                  <br />
-                  CONCERNS
-                </span>
-              </div>
-            </div>
-            <div className="diamond-row">
-              <div
-                className="diamond diamond-bottom"
-                onClick={() => handleDiamondClick("weather")}
-              >
-                <span>WEATHER</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+    <div className="results__wrapper" style={{ paddingTop: "60px" }}>
+      <div className="analysis">A.I. ANALYSIS</div>
+      <div className="demo-title">Demographics</div>
+      <p className="demo-text">Predicted Race & Age</p>
+
+      {!showDemo && <DiamondMenu onDiamondClick={handleDiamondClick} />}
 
       {showDemo && demographics && (
         <div className="demo-table">
@@ -107,8 +43,9 @@ export default function DemographicsInfo() {
               return (
                 <div
                   key={category}
-                  className={`sidebar-item${activeCategory === category ? " active" : ""
-                    }`}
+                  className={`sidebar-item${
+                    activeCategory === category ? " active" : ""
+                  }`}
                   onClick={() => setActiveCategory(category)}
                 >
                   <div className="sidebar-value">{value}</div>
@@ -180,12 +117,13 @@ export default function DemographicsInfo() {
                 .map(([key, val]) => (
                   <div
                     key={key}
-                    className={`confidence-item${(selected[activeCategory] ||
+                    className={`confidence-item${
+                      (selected[activeCategory] ||
                         getTopPrediction(demographics[activeCategory])[0]) ===
-                        key
+                      key
                         ? " active"
                         : ""
-                      }`}
+                    }`}
                     onClick={() =>
                       setSelected((prev) => ({
                         ...prev,
