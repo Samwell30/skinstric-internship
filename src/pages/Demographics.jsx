@@ -24,15 +24,27 @@ export default function DemographicsInfo() {
   };
 
   React.useEffect(() => {
-    const timeout = setTimeout(() => setLoading(false), 2000);
+    const timeout = setTimeout(() => setLoading(false), 10000);
     return () => clearTimeout(timeout);
   }, []);
 
   if (loading) {
     return (
-      <div className="loading-screen">
-        <div className="spinner"></div>
-        <p>Preparing your analysis...</p>
+      <div className="rhombus__container">
+        <div className="rhombus rhombus--large"></div>
+        <div className="rhombus rhombus--medium"></div>
+        <div className="rhombus">
+          <div className="rhombus__content">
+            <div className="loading-screen">
+              <p>Preparing your analysis...</p>
+              <div className="dots__loader">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -95,9 +107,8 @@ export default function DemographicsInfo() {
               return (
                 <div
                   key={category}
-                  className={`sidebar-item${
-                    activeCategory === category ? " active" : ""
-                  }`}
+                  className={`sidebar-item${activeCategory === category ? " active" : ""
+                    }`}
                   onClick={() => setActiveCategory(category)}
                 >
                   <div className="sidebar-value">{value}</div>
@@ -169,13 +180,12 @@ export default function DemographicsInfo() {
                 .map(([key, val]) => (
                   <div
                     key={key}
-                    className={`confidence-item${
-                      (selected[activeCategory] ||
+                    className={`confidence-item${(selected[activeCategory] ||
                         getTopPrediction(demographics[activeCategory])[0]) ===
-                      key
+                        key
                         ? " active"
                         : ""
-                    }`}
+                      }`}
                     onClick={() =>
                       setSelected((prev) => ({
                         ...prev,
@@ -215,9 +225,11 @@ export default function DemographicsInfo() {
           </button>
         </div>
       )}
-      <div className="select-text">
-        If A.I. estimate is wrong, select the correct one.
-      </div>
+      {showDemo && (
+        <div className="select-text">
+          If A.I. estimate is wrong, select the correct one.
+        </div>
+      )}
 
       <img
         src={backButton}

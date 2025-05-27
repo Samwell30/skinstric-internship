@@ -79,6 +79,7 @@ const ConsumerData = () => {
 
   return (
     <div className="consumer__page">
+      <div className="analysis">TO START ANALYSIS</div>
       <div className="back__btn">
         <Link to="/">
           <img src={backButton} alt="" />
@@ -87,22 +88,25 @@ const ConsumerData = () => {
       {step === "name" && (
         <div className="rhombus__container">
           <div className="rhombus rhombus--large"></div>
+          <div className="rhombus rhombus--medium"></div>
           <div className="rhombus">
-            <div className="input__wrapper">
-              <label htmlFor="name" className="input__label">
-                Click to type
-              </label>
-              {nameError && <p className="input__error">{nameError}</p>}
-              <input
-                className="user__input"
-                type="text"
-                name="name"
-                placeholder="Introduce Yourself"
-                autoComplete="off"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                onKeyDown={handleNameKeyDown}
-              />
+            <div className="rhombus__content">
+              <div className="input__wrapper">
+                <label htmlFor="name" className="input__label">
+                  Click to type
+                </label>
+                {nameError && <p className="input__error">{nameError}</p>}
+                <input
+                  className="user__input"
+                  type="text"
+                  name="name"
+                  placeholder="Introduce Yourself"
+                  autoComplete="off"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  onKeyDown={handleNameKeyDown}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -111,12 +115,13 @@ const ConsumerData = () => {
       {step === "location" && (
         <div className="rhombus__container">
           <div className="rhombus rhombus--large"></div>
+          <div className="rhombus rhombus--medium"></div>
           <div className="rhombus">
             <div className="input__wrapper">
               <label htmlFor="location" className="input__label">
                 Where are you from?
               </label>
-              {locationError && <p className="input__error">{locationError}</p>}{" "}
+              {locationError && <p className="input__error">{locationError}</p>}
               <input
                 className="user__input"
                 type="text"
@@ -150,12 +155,13 @@ const ConsumerData = () => {
       {step === "status" && status && (
         <div className="rhombus__container">
           <div className="rhombus rhombus--large"></div>
+          <div className="rhombus rhombus--medium"></div>
           <div className="rhombus">
             <div className="rhombus__content">
               <div className="status__wrapper">
                 {status.type === "success" ? (
                   <>
-                    <h1 className="thank__you">Thank you</h1>
+                    <div className="thank__you">Thank you!</div>
                     <p className="proceed__text">Proceed for the next step</p>
                   </>
                 ) : (

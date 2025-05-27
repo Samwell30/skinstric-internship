@@ -5,7 +5,7 @@ import camera from "../assets/camera.png";
 import CameraCapture from "../components/CameraCapture";
 import ImagePreview from "../components/ImagePreview";
 import GalleryUpload from "../components/GalleryUpload";
-import backButton from "../assets/button-icon-text-shrunk.png"
+import backButton from "../assets/button-icon-text-shrunk.png";
 
 const UserImage = () => {
   const navigate = useNavigate();
@@ -148,6 +148,8 @@ const UserImage = () => {
 
   return (
     <div className="userimage__container">
+      <div className="analysis">TO START ANALYSIS</div>
+
       <div className="userimage__preview">
         <ImagePreview imagePreview={imagePreview} />
       </div>
@@ -155,6 +157,8 @@ const UserImage = () => {
         <div className="userimage__actions">
           <div className="rhombus__container">
             <div className="rhombus rhombus--large"></div>
+            <div className="rhombus rhombus--medium"></div>
+
             <div className="rhombus">
               <img
                 src={camera}
@@ -164,11 +168,17 @@ const UserImage = () => {
               />
             </div>
             <div className="camera__label-line">
-              <div className="camera__label">ALLOW A.I.<br />TO SCAN YOUR FACE</div>
+              <div className="camera__label">
+                ALLOW A.I.
+                <br />
+                TO SCAN YOUR FACE
+              </div>
             </div>
           </div>
           <div className="rhombus__container">
             <div className="rhombus rhombus--large"></div>
+            <div className="rhombus rhombus--medium"></div>
+
             <div className="rhombus">
               <GalleryUpload
                 fileInputRef={fileInputRef}
@@ -176,10 +186,13 @@ const UserImage = () => {
                 galleryImg={gallery}
               />
             </div>
-                        <div className="camera__label-line">
-              <div className="camera__label">ALLOW A.I.<br />TO ACCESS GALLERY</div>
+            <div className="camera__label-line">
+              <div className="camera__label">
+                ALLOW A.I.
+                <br />
+                TO ACCESS GALLERY
+              </div>
             </div>
-
           </div>
         </div>
       </div>

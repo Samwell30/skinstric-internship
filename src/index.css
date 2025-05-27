@@ -11,26 +11,26 @@ img {
 
 #header {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 60px;
   display: flex;
   align-items: center;
   padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 900;
 }
 
 .enter__code {
   display: flex;
   justify-content: flex-end;
-  width: 92%;
+  width: 90%;
   font-size: 0.8rem;
 }
 .enter__code-btn {
   background: #000000;
   color: #fff;
   border: none;
-  padding: 8px 8px;
+  padding: 10px 10px;
   font-size: 0.7rem;
   font-family: inherit;
   cursor: pointer;
@@ -112,6 +112,15 @@ img {
 
 /* consumer data  */
 
+.analysis {
+  position: absolute;
+  font-size: 1rem;
+  top: 70px;
+  left: 20px;
+  font-weight: 900;
+  color: #000000;
+}
+
 .input__wrapper {
   display: flex;
   flex-direction: column;
@@ -188,18 +197,6 @@ img {
   }
 }
 
-.loading__wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-}
-
-.loading__text {
-  margin-top: 1rem;
-  font-size: 1.25rem;
-  color: #6b7280;
-}
 
 .status__wrapper {
   display: flex;
@@ -213,13 +210,12 @@ img {
 }
 
 .thank__you {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 .proceed__text {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #6b7280;
 }
 
@@ -262,7 +258,7 @@ img {
   justify-content: center;
   margin: 40px auto;
   transform: rotate(45deg);
-  border: 1px dotted #0556e1;
+  border: 2px dotted #A0A4AB;
   animation: rhombus-spin 100s linear infinite;
   top: 20px;
   left: 20px;
@@ -314,6 +310,20 @@ img {
   background: transparent;
   transform: rotate(45deg);
   animation: rhombus-spin 80s linear infinite;
+  pointer-events: none;
+}
+
+.rhombus.rhombus--medium {
+  width: 340px;
+  height: 340px;
+  border: 2px dashed #e0e0e0;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: transparent;
+  transform: rotate(45deg);
+  animation: rhombus-spin 60s linear infinite;
   pointer-events: none;
 }
 
@@ -392,7 +402,6 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: rhombus-counter-spin 100s linear infinite;
 }
 
 .results__wrapper {
@@ -431,7 +440,6 @@ img {
   text-align: center;
   cursor: pointer;
   transform: rotate(45deg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: background 0.2s;
 }
 
@@ -462,4 +470,25 @@ img {
   flex-direction: column;
   align-items: flex-start;
   pointer-events: none;
+}
+
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 6px solid #e0e0e0;
+  border-top: 6px solid #0556e1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1.5rem;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
