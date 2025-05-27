@@ -10,6 +10,7 @@
   position: absolute;
   top: 170px;
   left: 30px;
+  font-size: 13px;
 }
 
 .demo-table {
@@ -155,6 +156,15 @@
   gap: 0.5rem;
   font-weight: bold;
   left: 30px;
+}
+.right-corner-btn {
+  position: absolute;
+  bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  right: 30px;
 }
 
 .demo-actions {

@@ -28,8 +28,8 @@ export default function DemographicsInfo() {
   return (
     <div className="results__wrapper" style={{ paddingTop: "60px" }}>
       <div className="analysis">A.I. ANALYSIS</div>
-      <div className="demo-title">Demographics</div>
-      <p className="demo-text">Predicted Race & Age</p>
+        <div className="demo-title">DEMOGRAPHICS</div>
+        <p className="demo-text">PREDICTED RACE & AGE</p>
 
       {!showDemo && <DiamondMenu onDiamondClick={handleDiamondClick} />}
 

@@ -109,7 +109,7 @@ img {
 .rhombus.rhombus--large {
   width: 360px;
   height: 360px;
-  border: 2px dashed #a0a4ab;
+  border: 2px dashed rgba(160, 164, 171, 0.1); 
   position: absolute;
   top: 0;
   left: 0;
@@ -123,7 +123,7 @@ img {
 .rhombus.rhombus--medium {
   width: 340px;
   height: 340px;
-  border: 2px dashed #e0e0e0;
+  border: 2px dashed rgba(160, 164, 171, 0.3); 
   position: absolute;
   top: 10px;
   left: 10px;
@@ -288,8 +288,8 @@ img {
 }
 .proceed__btn {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  top: 630px;
+  right: 80px;
   margin-top: 0;
   display: flex;
   justify-content: center;
@@ -378,6 +378,12 @@ img {
   margin-bottom: 0.5rem;
 }
 
+.userimage__actions {
+  display: flex;
+  flex-direction: row;
+  gap: 6vw;
+  align-items: center;
+}
 
 /* user image  */
 
@@ -402,14 +408,6 @@ img {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 60px;
-}
-
-.userimage__actions {
-  display: flex;
-  flex-direction: row;
-  gap: 300px;
-  align-items: center;
 }
 
 .userimage__camera {
@@ -520,4 +518,126 @@ img {
 .diamond-left,
 .diamond-right {
   margin: 0 2.1rem;
+}
+
+/* responsiveness  */
+
+@media (max-width: 1000px) {
+  .title {
+    font-size: 48px;
+    line-height: 56px;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    padding: 0 10px;
+  }
+  .enter__code {
+    width: 100%;
+    font-size: 0.9rem;
+    justify-content: end;
+    padding: 5rem ;
+  }
+  .test__btn {
+    position: absolute;
+    display: block;
+    margin: 32px auto 0 auto;
+    top: 52%;
+    right: 45%;
+    z-index: 1;
+  }
+
+  .description--para{
+    position: absolute;
+    display: block;
+    top: 40%;
+    left: 33%;
+    z-index: 1;
+    margin: 32px auto 0 auto;
+    text-align: center;
+  }  
+}
+
+@media (max-width: 800px) {
+  .userimage__actions {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .rhombus__container {
+    width: 200px;
+    height: 200px;
+    top: 25%;
+    margin: 20px auto;
+  }
+  .rhombus,
+  .rhombus.rhombus--large,
+  .rhombus.rhombus--medium {
+    width: 180px;
+    height: 180px;
+  }
+  .analysis {
+    font-size: 14px;
+  }
+  .userimage__actions {
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 500px) {
+  .consumer__page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .user__input {
+    width: 50vw;
+    font-size: 2rem;
+    line-height: 2.2rem;
+  }
+  .description--para{
+    position: absolute;
+    display: block;
+    top: 40%;
+    left: 20px;
+    z-index: 1;
+    width: 90vw;
+    text-align: center;
+  }
+  .userimage__container {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+  }
+  .userimage__actions {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .rhombus__container {
+    width: 140px;
+    height: 140px;
+    margin: 10px auto;
+    top: 0;
+  }
+  .rhombus,
+  .rhombus.rhombus--large,
+  .rhombus.rhombus--medium {
+    width: 120px;
+    height: 120px;
+  }
+  .userimage__preview {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 12px auto;
+  }
+  .analysis {
+    font-size: 12px;
+  }
 }
