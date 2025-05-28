@@ -9,7 +9,6 @@ const DiamondMenuPage = () => {
     if (section === "demographics") {
       navigate("/demographics", { state: location.state });
     }
-    // Add more sections as needed
   };
 
   return (

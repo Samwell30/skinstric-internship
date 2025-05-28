@@ -63,7 +63,7 @@ const DiamondMenu = ({ onDiamondClick }) => {
       />
       <img
         src={getSummary}
-        alt="back button"
+        alt="summary button"
         // onClick={() => navigate("/summary")}
         className="right-corner-btn"
       />

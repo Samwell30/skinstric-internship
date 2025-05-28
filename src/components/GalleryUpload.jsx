@@ -7,6 +7,7 @@ const GalleryUpload = ({ fileInputRef, onFileChange, galleryImg, style }) => (
       alt="Upload from Gallery"
       onClick={() => fileInputRef.current.click()}
       style={style}
+      className="userimage__gallery"
     />
     <input
       type="file"

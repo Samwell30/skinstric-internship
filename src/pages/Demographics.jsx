@@ -23,13 +23,15 @@ export default function DemographicsInfo() {
     return Object.entries(dataObj).sort((a, b) => b[1] - a[1])[0];
   };
 
-  const { demographics, preview } = state;
+  const { demographics } = state;
 
   return (
     <div className="results__wrapper" style={{ paddingTop: "60px" }}>
       <div className="analysis">A.I. ANALYSIS</div>
+      <div className="demo-layout">
         <div className="demo-title">DEMOGRAPHICS</div>
         <p className="demo-text">PREDICTED RACE & AGE</p>
+      </div>
 
       {!showDemo && <DiamondMenu onDiamondClick={handleDiamondClick} />}
 
@@ -61,7 +63,24 @@ export default function DemographicsInfo() {
                 const data = demographics[activeCategory];
                 const [topKey] = getTopPrediction(data);
                 const value = selected[activeCategory] || topKey;
-                return activeCategory === "age" ? `${value} y.o.` : value;
+                const confidence = (data[value] * 100).toFixed(0);
+                return (
+                  <>
+                    <span>
+                      {activeCategory === "age" ? `${value} y.o.` : value}
+                    </span>
+                    <span
+                      className="main-confidence"
+                      style={{
+                        marginLeft: 8,
+                        fontSize: "0.9em",
+                        color: "#888",
+                      }}
+                    >
+                      {confidence}%
+                    </span>
+                  </>
+                );
               })()}
             </div>
             <div className="main-circle">
