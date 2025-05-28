@@ -191,7 +191,7 @@ export default function DemographicsInfo() {
       <img
         src={backButton}
         alt="back button"
-        onClick={() => navigate("/userImage")}
+        onClick={() => navigate("/diamond-menu")}
         className="left-corner-btn"
       />
     </div>
