@@ -126,22 +126,20 @@ const UserImage = () => {
 
   if (cameraLoading) {
     return (
-      <div className="rhombus__container">
-        <div className="rhombus rhombus--large"></div>
-        <div className="rhombus rhombus--medium"></div>
-        <div className="rhombus">
+        <div className="rhombus__container">
+          <div className="rhombus rhombus--large"></div>
+          <div className="rhombus rhombus--medium"></div>
           <div className="rhombus__content">
-            <div className="loading-screen">
-              <p>SETTING UP CAMERA...</p>
-              <div className="dots__loader">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
+          <div className="loading__wrapper">
+            <p className="loading__text">Setting up camera...</p>
+            <div className="dots__loader">
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
           </div>
         </div>
-      </div>
+        </div>
     );
   }
 
@@ -166,22 +164,22 @@ const UserImage = () => {
 
   if (loading) {
     return (
-      <div className="rhombus__container">
-        <div className="rhombus rhombus--large"></div>
-        <div className="rhombus rhombus--medium"></div>
-        <div className="rhombus">
-          <div className="rhombus__content">
-            <div className="loading-screen">
-              <p>Preparing your analysis...</p>
-              <div className="dots__loader">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
+    <div className="rhombus__container">
+      <div className="rhombus rhombus--large"></div>
+      <div className="rhombus rhombus--medium"></div>
+      <div className="rhombus">
+        <div className="rhombus__content userimage__loading-content">
+          <div className="loading__wrapper">
+            <p className="loading__text">Processing your analysis</p>
+            <div className="dots__loader">
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
           </div>
         </div>
       </div>
+    </div>
     );
   }
 

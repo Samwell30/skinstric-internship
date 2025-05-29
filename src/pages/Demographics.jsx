@@ -26,6 +26,7 @@ export default function DemographicsInfo() {
   const { demographics } = state;
 
   return (
+    <div class="demographics-page">
     <div className="results__wrapper" style={{ paddingTop: "60px" }}>
       <div className="analysis">A.I. ANALYSIS</div>
       <div className="demo-layout">
@@ -194,6 +195,7 @@ export default function DemographicsInfo() {
         onClick={() => navigate("/diamond-menu")}
         className="left-corner-btn"
       />
+    </div>
     </div>
   );
 }

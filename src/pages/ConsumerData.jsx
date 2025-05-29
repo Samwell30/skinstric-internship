@@ -52,6 +52,10 @@ const ConsumerData = () => {
       setLocationError("");
       setStep("loading");
 
+      const minLoading = 1500;
+      const start = Date.now();
+
+      let apiStatus = null;
       try {
         const res = await fetch(
           "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseOne",
@@ -63,13 +67,26 @@ const ConsumerData = () => {
         );
         const data = await res.json();
         if (data.success) {
-          setStatus({ type: "success" });
+          apiStatus = { type: "success" };
         } else {
-          setStatus({ type: "error", text: data.message || "Unknown error" });
+          apiStatus = { type: "error", text: data.message || "Unknown error" };
         }
       } catch (err) {
-        setStatus({ type: "error", text: err.message });
-      } finally {
+        apiStatus = { type: "error", text: err.message };
+      }
+
+      const elapsed = Date.now() - start;
+      const remaining = minLoading - elapsed;
+
+      if (remaining > 0) {
+        console.log("Waiting extra", remaining, "ms");
+        setTimeout(() => {
+          setStatus(apiStatus);
+          setStep("status");
+        }, remaining);
+      } else {
+        console.log("No wait, API took", elapsed, "ms");
+        setStatus(apiStatus);
         setStep("status");
       }
     }
@@ -90,23 +107,21 @@ const ConsumerData = () => {
           <div className="rhombus rhombus--large"></div>
           <div className="rhombus rhombus--medium"></div>
           <div className="rhombus">
-            <div className="rhombus__content">
-              <div className="input__wrapper">
-                <label htmlFor="name" className="input__label">
-                  Click to type
-                </label>
-                {nameError && <p className="input__error">{nameError}</p>}
-                <input
-                  className="user__input"
-                  type="text"
-                  name="name"
-                  placeholder="Introduce Yourself"
-                  autoComplete="off"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  onKeyDown={handleNameKeyDown}
-                />
-              </div>
+            <div className="input__wrapper">
+              <label htmlFor="name" className="input__label">
+                Click to type
+              </label>
+              {nameError && <p className="input__error">{nameError}</p>}
+              <input
+                className="user__input"
+                type="text"
+                name="name"
+                placeholder="Introduce Yourself"
+                autoComplete="off"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onKeyDown={handleNameKeyDown}
+              />
             </div>
           </div>
         </div>
@@ -141,6 +156,8 @@ const ConsumerData = () => {
       {step === "loading" && (
         <div className="rhombus__container">
           <div className="rhombus rhombus--large"></div>
+          <div className="rhombus rhombus--medium"></div>
+          <div className="rhombus__content">
           <div className="loading__wrapper">
             <p className="loading__text">Processing submission...</p>
             <div className="dots__loader">
@@ -150,32 +167,31 @@ const ConsumerData = () => {
             </div>
           </div>
         </div>
+        </div>
       )}
 
       {step === "status" && status && (
         <div className="rhombus__container">
           <div className="rhombus rhombus--large"></div>
           <div className="rhombus rhombus--medium"></div>
-          <div className="rhombus no-spin">
-            <div className="rhombus__content">
-              <div className="status__wrapper">
-                {status.type === "success" ? (
-                  <>
-                    <div className="thank__you">Thank you!</div>
-                    <p className="proceed__text">Proceed for the next step</p>
-                  </>
-                ) : (
-                  <p
-                    style={{
-                      color: "red",
-                      textAlign: "center",
-                      fontSize: "1.25rem",
-                    }}
-                  >
-                    {status.text}
-                  </p>
-                )}
-              </div>
+          <div className="rhombus__content">
+            <div className="status__wrapper">
+              {status.type === "success" ? (
+                <>
+                  <div className="thank__you">Thank you!</div>
+                  <p className="proceed__text">Proceed for the next step</p>
+                </>
+              ) : (
+                <p
+                  style={{
+                    color: "red",
+                    textAlign: "center",
+                    fontSize: "1.25rem",
+                  }}
+                >
+                  {status.text}
+                </p>
+              )}
             </div>
           </div>
         </div>

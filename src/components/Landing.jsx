@@ -4,6 +4,15 @@ import toTest from "../assets/button-icon-text-expanded.png";
 
 const Landing = () => {
   const [hovered, setHovered] = useState(false);
+
+  // Only set hovered if window width is greater than 900px
+  const handleMouseEnter = () => {
+    if (window.innerWidth > 900) setHovered(true);
+  };
+  const handleMouseLeave = () => {
+    if (window.innerWidth > 900) setHovered(false);
+  };
+
   return (
     <>
       <div className="test__btn">
@@ -12,8 +21,8 @@ const Landing = () => {
             style={{ height: "70px" }}
             src={toTest}
             alt=""
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
         </Link>
       </div>
