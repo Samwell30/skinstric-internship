@@ -164,11 +164,11 @@ const UserImage = () => {
 
   if (loading) {
     return (
-    <div className="rhombus__container">
-      <div className="rhombus rhombus--large"></div>
-      <div className="rhombus rhombus--medium"></div>
-      <div className="rhombus">
-        <div className="rhombus__content userimage__loading-content">
+        <div className="rhombus__container">
+          <div className="userimage__loading-container">
+          <div className="rhombus rhombus--large"></div>
+          <div className="rhombus rhombus--medium"></div>
+          <div className="rhombus__content">
           <div className="loading__wrapper">
             <p className="loading__text">Processing your analysis</p>
             <div className="dots__loader">
@@ -176,10 +176,10 @@ const UserImage = () => {
               <span></span>
               <span></span>
             </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+        </div>
     );
   }
 

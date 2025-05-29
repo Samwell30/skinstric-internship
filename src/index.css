@@ -415,7 +415,6 @@ margin-bottom: 0.5em;}
   cursor: pointer;
 }
 
-
 .camera__label-line {
   position: absolute;
   left: 60%;
@@ -701,6 +700,9 @@ margin-bottom: 0.5em;}
   .userimage__actions {
     flex-direction: column;
     gap: 40px;
+  }
+  .userimage__loading-container {
+    margin-top: 80px;
   }
   .rhombus__container {
     width: 200px;
