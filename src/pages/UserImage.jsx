@@ -72,35 +72,34 @@ const UserImage = () => {
     }
   };
 
-const uploadBase64 = async (base64, preview = null) => {
-  setLoading(true);
-  try {
-    const res = await fetch(
-      "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: base64 }),
-      }
-    );
-    const json = await res.json();
+  const uploadBase64 = async (base64, preview = null) => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: base64 }),
+        }
+      );
+      const json = await res.json();
 
-    // Keep loading until after navigation
-    setTimeout(() => {
-      navigate("/diamond-menu", {
-        state: {
-          demographics: json.data,
-          preview: preview || base64,
-        },
-      });
-      setLoading(false); // Move this here
-    }, 1500);
-  } catch (err) {
-    console.error(err);
-    alert("Upload failed. Try again.");
-    setLoading(false); // Only set false on error
-  }
-};
+      setTimeout(() => {
+        navigate("/diamond-menu", {
+          state: {
+            demographics: json.data,
+            preview: preview || base64,
+          },
+        });
+        setLoading(false); 
+      }, 1500);
+    } catch (err) {
+      console.error(err);
+      alert("Upload failed. Try again.");
+      setLoading(false); 
+    }
+  };
 
   useEffect(() => {
     if (showCamera && videoRef.current && cameraStream) {
@@ -109,7 +108,7 @@ const uploadBase64 = async (base64, preview = null) => {
   }, [showCamera, cameraStream]);
 
   const startCamera = async () => {
-    setCameraLoading(true); // Show loading
+    setCameraLoading(true); 
     setShowCamera(true);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -117,7 +116,7 @@ const uploadBase64 = async (base64, preview = null) => {
         videoRef.current.srcObject = stream;
       }
       setCameraStream(stream);
-      setCameraLoading(false); // Hide loading when ready
+      setCameraLoading(false); 
     } catch (err) {
       alert("Camera access denied.");
       setShowCamera(false);
@@ -157,27 +156,11 @@ const uploadBase64 = async (base64, preview = null) => {
     setShowCamera(false);
   };
 
-  const captureSelfie = async () => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-
-    if (!video.videoWidth || !video.videoHeight) {
-      alert("Camera not ready. Please try again.");
-      return;
-    }
-
+  const handleCameraCapture = async (base64) => {
     setLoading(true);
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    const base64 = canvas.toDataURL("image/jpeg", 0.8);
     setImagePreview(base64);
     const resizedBase64 = await resizeImage(base64);
     await uploadBase64(resizedBase64, base64);
-
     stopCamera();
   };
 
@@ -259,7 +242,7 @@ const uploadBase64 = async (base64, preview = null) => {
         <CameraCapture
           videoRef={videoRef}
           canvasRef={canvasRef}
-          onCapture={captureSelfie}
+          onCapture={handleCameraCapture}
           onClose={stopCamera}
         />
       )}

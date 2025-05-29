@@ -8,9 +8,9 @@ const DiamondMenu = ({ onDiamondClick }) => {
 
   return (
     <div className="diamond-menu-center">
-      <div className="analysis">
-        A.I. ANALYSIS
-      </div>
+      <div className="analysis diamond-analysis">
+  A.I. ANALYSIS
+</div>
         <p style={{ position: "absolute", top: "85px", left: "29px", lineHeight: "24px" }}>
           A. I. has estimated the following. <br />
           Fix estimated information if needed.
