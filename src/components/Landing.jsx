@@ -30,7 +30,7 @@ const Landing = () => {
                 <img
                   src={discover}
                   alt=""
-                  style={{ marginLeft: "240px" }}
+                  style={{ marginLeft: "240px", height: "32px" }}
                 />
               </Link>
             </div>
@@ -49,7 +49,7 @@ const Landing = () => {
               <img
                 src={toTest}
                 alt=""
-                style={{ marginRight: "220px", height: "65px" }}
+                style={{ marginRight: "220px", height: "50px" }}
               />
             </Link>
           </div>
