@@ -85,10 +85,12 @@ const CameraCapture = ({ videoRef, canvasRef, onClose, onCapture }) => {
       <img
         src={backButton}
         alt="back button"
-        onClick={() => navigate("/")}
+        onClick={() => {
+          onClose && onClose();
+          navigate("/userImage");
+        }}
         className="left-corner-btn"
-      />
-      <canvas ref={canvasRef} style={{ display: "none" }} />
+      />      <canvas ref={canvasRef} style={{ display: "none" }} />
       <img className="camera-text" src={cameraText} alt="" />
       {pictureTaken && (
         <div
@@ -108,7 +110,7 @@ const CameraCapture = ({ videoRef, canvasRef, onClose, onCapture }) => {
           <p>Picture taken! You can now proceed.</p>
           <button
             onClick={() => {
-              onCapture && onCapture(capturedImage); 
+              onCapture && onCapture(capturedImage);
               onClose && onClose();
             }}
             style={{ marginTop: "1rem" }}

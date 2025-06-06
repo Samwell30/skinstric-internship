@@ -193,6 +193,27 @@ img {
   transform: none !important;
 }
 
+
+.rhombus--button {
+  width: 302px;
+  height: 302px;
+  position: absolute;
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  border: 2px dashed rgba(160, 164, 171, 0.3);
+}
+
+.rhombus--button-content {
+  transform: rotate(-45deg);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* landing page  */
 
 .landing__page {
@@ -227,6 +248,18 @@ img {
   right: 95px;
   top: 50%;
   z-index: 1;
+  height: 40px;
+}
+.discover__btn {
+  position: absolute;
+  left: 85px;
+  top: 51%;
+  z-index: 1;
+}
+
+.discover__btn img {
+  height: 40px; /* or your preferred size */
+  width: auto;
 }
 
 .description--para {

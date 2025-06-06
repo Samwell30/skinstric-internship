@@ -1,30 +1,59 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import toTest from "../assets/button-icon-text-expanded.png";
+import discover from "../assets/DiscoverA.I.png"
 
 const Landing = () => {
   const [hovered, setHovered] = useState(false);
+  const [hideDiscover, setHideDiscover] = useState(false);
 
-  // Only set hovered if window width is greater than 900px
   const handleMouseEnter = () => {
-    if (window.innerWidth > 900) setHovered(true);
+    if (window.innerWidth > 900) {
+      setHovered(true);
+      setHideDiscover(true);
+    }
   };
   const handleMouseLeave = () => {
-    if (window.innerWidth > 900) setHovered(false);
+    if (window.innerWidth > 900) {
+      setHovered(false);
+      setHideDiscover(false);
+    }
   };
 
   return (
     <>
-      <div className="test__btn">
-        <Link to="/consumerData">
-          <img
-            style={{ height: "70px" }}
-            src={toTest}
-            alt=""
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-        </Link>
+      {!hideDiscover && (
+        <div className="discover__btn" style={{ position: "absolute", left: -155, top: "32%", zIndex: 1 }}>
+          <div className="rhombus--button">
+            <div className="rhombus--button-content">
+              <Link to="/discover">
+                <img
+                  src={discover}
+                  alt=""
+                  style={{ marginLeft: "240px" }}
+                />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+      <div
+        className="test__btn"
+        style={{ position: "absolute", right: 155, top: "32%", zIndex: 1 }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="rhombus--button">
+          <div className="rhombus--button-content">
+            <Link to="/consumerData">
+              <img
+                src={toTest}
+                alt=""
+                style={{ marginRight: "220px", height: "65px" }}
+              />
+            </Link>
+          </div>
+        </div>
       </div>
       <div className="landing__page">
         <h1 className={`title${hovered ? " title--left-abs" : ""}`}>
